@@ -1,0 +1,26 @@
+server:
+  port: 9527
+spring:
+  application:
+    name: cloud-zuul-gateway     #暴露的服务名
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka7001.com:7001/eureka/,http://eureka7002.com:7002/eureka/,http://eureka7003.com:7003/eureka/
+  instance:
+    instance-id: zuul9527.com
+    prefer-ip-address: true
+
+#配置路由映射
+zuul:
+  prefix: /hzy   #加上统一的映射地址的前缀
+  ignored-services: cloud-dept   #屏蔽原始服务名的访问，如果想屏蔽所有的，就有“*”通配符。
+  routes:
+    mydept.serviceId: cloud-dept    #将被映射的地址
+    mydept.path: /mydept/**   #映射地址
+
+info:
+  app.name: hzy-cloud
+  company.name: www.hzy.com
+  build.artifactId: $project.artifactId$
+  build.version: $project.version$
